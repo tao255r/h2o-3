@@ -523,7 +523,7 @@ The \href{http://yann.lecun.com/exdb/mnist/}{MNIST database} is a well-known aca
 \caption{Example MNIST digit images \label{overflow}}
 \end{figure}
 
-This example downloads and imports the training and testing datasets from a public Amazon S3 bucket (\url{https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptopt/mnist/train.csv.gz} and same for \texttt{test.csv.gz}).
+This example downloads and imports the training and testing datasets from a public Amazon S3 bucket (\url{https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/train.csv.gz} and same for \texttt{test.csv.gz}).
 The training file is 13MB and the testing file is 2.1MB. The data is downloaded directly, so the data import speed is dependent on download speed.  Files can be imported from a variety of sources, including local file systems or shared file systems such as NFS, S3 and HDFS.
 
 \newpage
@@ -781,7 +781,7 @@ After training for $8,000$ epochs (which took about ten hours) on ten nodes, we 
 \subsection{Computational Performance}
 There are many parameters that affect the computational performance of H2O Deep Learning, but the default values should result in good performance for most problems. 
 
-An in-depth study of the computational performance characteristics of H2O Deep Learning with complete code examples and results can be found in our blog post, \textbf{Definitive Performance Tuning Guide for Deep Learning}, available at \url{http://h2o.ai/blog/2015/08/deep-learning-performance/}.
+An in-depth study of the computational performance characteristics of H2O Deep Learning with complete code examples and results can be found in our blog post, \textbf{Definitive Performance Tuning Guide for Deep Learning}, available at \url{http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html#deep-learning-tuning-guide}.
 
 The parallel scalability of H2O for the MNIST dataset on 1 to 63 compute nodes is shown in the figure below.
 \begin{figure}[h!]
