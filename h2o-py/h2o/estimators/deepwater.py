@@ -10,14 +10,15 @@ from h2o.estimators.estimator_base import H2OEstimator
 from h2o.exceptions import H2OValueError
 from h2o.frame import H2OFrame
 from h2o.utils.typechecks import assert_is_type, Enum, numeric
+import h2o
 
 
 class H2ODeepWaterEstimator(H2OEstimator):
     """
     Deep Water
 
-    Build a supervised Deep Neural Network model for image classification
-    Builds a artificial neural network on an H2OFrame containing paths of images
+    Build a Deep Learning model using multiple native GPU backends
+    Builds a deep neural network on an H2OFrame containing various data sources
     """
 
     algo = "deepwater"
@@ -659,3 +660,17 @@ class H2ODeepWaterEstimator(H2OEstimator):
         self._parms["hidden_dropout_ratios"] = hidden_dropout_ratios
 
 
+
+    # Ask the H2O server whether a Deep Water model can be built (depends on availability of native backends)
+    @staticmethod
+    def available():
+        """
+        Returns True if a deep water model can be built, or False otherwise.
+        """
+        builder_json = h2o.api("GET /3/ModelBuilders", data={"algo": "deepwater"})
+        visibility = builder_json["model_builders"]["deepwater"]["visibility"]
+        if (visibility == "Experimental"):
+            print("Cannot build a Deep Water model - no backend found.")
+            return False
+        else:
+            return True
