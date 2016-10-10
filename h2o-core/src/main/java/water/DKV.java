@@ -109,7 +109,7 @@ public abstract class DKV {
    */
   static public Value DputIfMatch( Key key, Value val, Value old, Futures fs, boolean dontCache ) {
     // For debugging where keys are created from
-//    try { System.err.flush(); System.err.println(key); Thread.dumpStack(); System.err.flush(); } catch (Throwable t) {}
+    try { System.err.flush(); System.err.println(key); Thread.dumpStack(); System.err.flush(); } catch (Throwable t) {}
 
     // First: I must block repeated remote PUTs to the same Key until all prior
     // ones complete - the home node needs to see these PUTs in order.
