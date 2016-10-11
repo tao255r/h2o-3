@@ -1,5 +1,7 @@
 package water;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /** A Distributed Key/Value Store.
  *  <p>
  *  Functions to Get and Put Values into the K/V store by Key.
@@ -50,6 +52,8 @@ package water;
  *  @version 1.0
  */
 public abstract class DKV {
+
+  public static transient ConcurrentHashMap<Key, String> keyStack = new ConcurrentHashMap<>();
 
   /** Make the mapping <em>key -&gt; v</em>.  Blocking, caching.  */
   static public Value put( Key key, Iced v ) { return put(key,new Value(key,v)); }
@@ -109,6 +113,9 @@ public abstract class DKV {
    */
   static public Value DputIfMatch( Key key, Value val, Value old, Futures fs, boolean dontCache ) {
     // For debugging where keys are created from
+
+    keyStack.put(key, org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(new Exception("Stack Trace")));
+
 //    try { System.err.flush(); System.err.println(key); Thread.dumpStack(); System.err.flush(); } catch (Throwable t) {}
 
     // First: I must block repeated remote PUTs to the same Key until all prior

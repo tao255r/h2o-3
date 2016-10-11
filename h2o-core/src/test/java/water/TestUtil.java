@@ -78,7 +78,7 @@ public class TestUtil extends Iced {
   }
 
   @AfterClass
-  public static void checkLeakedKeys() {
+  public static void checkLeakedKeys() throws Exception {
     int leaked_keys = H2O.store_size() - _initial_keycnt;
     int cnt=0;
     if( leaked_keys > 0 ) {
@@ -91,8 +91,17 @@ public class TestUtil extends Iced {
           leaked_keys--;
         } else {
           System.out.println(k + " -> " + value.get());
-          if( cnt++ < 10 )
+          if( cnt++ < 10 ) {
             System.err.println("Leaked key: " + k + " = " + TypeMap.className(value.type()));
+            final Key fk = k;
+            new MRTask() {
+              @Override
+              protected void setupLocal() {
+                System.out.println(DKV.keyStack.get(fk));
+                System.err.println(DKV.keyStack.get(fk));
+              }
+            }.doAllNodes().get();
+          }
         }
       }
       if( 10 < leaked_keys ) System.err.println("... and "+(leaked_keys-10)+" more leaked keys");
